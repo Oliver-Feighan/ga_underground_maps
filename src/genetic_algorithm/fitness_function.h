@@ -9,8 +9,6 @@
 
 namespace gaus::genetic_algorithm{
 
-double
-fitness(const Gene);
 
 }
 

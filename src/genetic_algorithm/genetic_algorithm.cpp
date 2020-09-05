@@ -8,15 +8,15 @@
 
 namespace gaus::genetic_algorithm {
 
-Cell
-genetic_algorithm(const int target,
-                  const int n_cells,
-                  const int n_genes){
+arma::uvec
+find_solution(const std::function<double(int, arma::uvec)> &fitness_function,
+              const int colony_size,
+              const int gene_length,
+              const double mutation_rate){
 
-  const auto cells = make_cells(n_cells, n_genes);
+    auto colony = Colony(colony_size, gene_length, mutation_rate);
 
-
-
+    return {};
 }
 
 }

@@ -9,8 +9,6 @@
 
 namespace gaus::genetic_algorithm {
 
-Cell
-genetic_algorithm(const int target);
 
 }
 
