@@ -2,10 +2,10 @@
 
 namespace gaus::genetic_algorithm {
 
-void
+arma::uvec
 Cell::make_genes(const int gene_length) {
 
-  genes =
+  return
       arma::randi<arma::uvec>(gene_length, arma::distr_param(0, 1));
 
 }
@@ -17,45 +17,30 @@ Cell::mutate(const double mutation_rate) {
 
   const auto random_indices =
       arma::randi<arma::uvec>(n_mutations,
-                              arma::distr_param(0, genes.n_elem));
+                              arma::distr_param(0, genes.n_elem - 1));
 
   genes(random_indices) =
       arma::randi<arma::uvec>(n_mutations, arma::distr_param(0, 1));
 
 }
 
-Cell::Cell(const int t, const int gene_length, const double f) {
-  tag = t;
-  make_genes(gene_length);
-  fitness = f;
-}
-
-void
+std::vector<Cell>
 Colony::make_colony(const int n_cells,
                     const int gene_length) {
 
-  cells.reserve(gene_length);
+  std::vector<Cell> initial_cells;
 
   for (int i = 0; i < n_cells; i++) {
-    Cell cell_i = Cell(i, gene_length, NAN);
-    cells[i] = cell_i;
+    initial_cells.push_back(Cell(i, gene_length, NAN));
 
   }
-}
 
-
-Colony::Colony(const int size, const int gene_length, const double m_rate) {
-  make_colony(size, gene_length);
-  colony_size = size;
-  assert(m_rate < 1);
-  mutation_rate = m_rate;
-  current_top_fitness = NAN;
-
+  return initial_cells;
 }
 
 void
 Colony::find_fitnesses(
-    const std::function<double(arma::uvec)> & fitness_function) {
+    const std::function<int(arma::uvec)> & fitness_function) {
   for (auto & cell : cells) {
     cell.fitness = fitness_function(cell.genes);
 
@@ -80,6 +65,13 @@ Colony::mutate_colony() {
   }
 }
 
+void
+Colony::evolve(const double selection){
+  const int n_survivors = std::round(selection * colony_size);
 
+  const std::vector<Cell> survivors = cells(cells.begin(), cells.begin() + n_survivors);
+
+
+}
 
 }

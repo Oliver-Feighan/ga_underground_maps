@@ -9,6 +9,11 @@
 
 namespace gaus::genetic_algorithm {
 
+arma::uvec
+find_solution(const std::function<int(arma::uvec)> &fitness_function,
+              const int colony_size,
+              const int gene_length,
+              const double mutation_rate);
 
 }
 
