@@ -58,6 +58,9 @@ public:
   void
   mutate_colony();
 
+  void
+  make_next_generation(const double selection);
+
 };
 
 

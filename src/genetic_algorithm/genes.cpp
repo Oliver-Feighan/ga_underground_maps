@@ -50,7 +50,7 @@ Colony::find_fitnesses(
 void
 Colony::sort_fitnesses() {
   std::sort(cells.begin(), cells.end(), [](Cell & a, Cell & b) {
-    return a.fitness > b.fitness;
+    return a.fitness < b.fitness;
 
   });
 
@@ -66,11 +66,45 @@ Colony::mutate_colony() {
 }
 
 void
-Colony::evolve(const double selection){
+Colony::make_next_generation(const double selection){
   const int n_survivors = std::round(selection * colony_size);
 
-  const std::vector<Cell> survivors = cells(cells.begin(), cells.begin() + n_survivors);
+  //make survivors
+  auto start = cells.begin();
+  auto end = cells.begin() + n_survivors;
 
+  const std::vector<Cell> survivors(start, end);
+
+  std::vector<arma::uvec> genetic_material = {};
+
+  for(int i = 0; i < n_survivors; i++){
+
+    const int gene_length = survivors[i].genes.n_elem;
+
+    const auto top_half = survivors[i].genes.head(gene_length / 2);
+    const auto bottom_half = survivors[i].genes.tail(gene_length / 2);
+
+    genetic_material.push_back(top_half);
+    genetic_material.push_back(bottom_half);
+
+  }
+
+  for(int i = 0; i < colony_size; i++){
+
+    const auto a =
+        arma::randi<int>(arma::distr_param(0, n_survivors * 2 - 1));
+
+    const auto b =
+        arma::randi<int>(arma::distr_param(0, n_survivors * 2 - 1));
+
+    const auto gen_a = genetic_material[a];
+    const auto gen_b = genetic_material[b];
+
+    const arma::uvec new_genes =
+        arma::join_vert(genetic_material[a], genetic_material[b]);
+
+    cells[i].genes = new_genes;
+  }
 
 }
 

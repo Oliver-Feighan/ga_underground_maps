@@ -8,23 +8,25 @@
 
 namespace gaus::genetic_algorithm {
 
-arma::uvec
+Solution
 find_solution(const std::function<int(arma::uvec)> &fitness_function,
               const int colony_size,
               const int gene_length,
+              const double selection_rate,
               const double mutation_rate){
 
     auto colony = Colony(colony_size, gene_length, mutation_rate);
 
-
     bool found_solution = false;
+
+    int n_generations = 0;
 
     while (!found_solution){
 
       colony.mutate_colony();
       colony.find_fitnesses(fitness_function);
       colony.sort_fitnesses();
-      colony.evolve();
+      colony.make_next_generation(selection_rate);
 
       found_solution = (colony.current_top_fitness == 0);
 
@@ -32,10 +34,13 @@ find_solution(const std::function<int(arma::uvec)> &fitness_function,
 
       colony.cells[0].genes.t().print("top genes");
 
+      std::cout << "----" << std::endl;
+
+      n_generations++;
     }
 
 
-    return colony.cells[0].genes;
+    return {colony.cells[0].genes, n_generations};
 
 }
 
