@@ -32,9 +32,10 @@ add_executable(GAUS
 
                src/genetic_algorithm/genes.cpp
                src/genetic_algorithm/genetic_algorithm.cpp
-               src/genetic_algorithm/fitness_function.cpp
 
-)
+               src/underground_modelling/graphing.cpp
+
+        )
 
 target_link_libraries(GAUS ${ARMADILLO_LIBRARIES})
 

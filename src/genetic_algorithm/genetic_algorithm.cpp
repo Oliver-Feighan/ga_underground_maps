@@ -26,13 +26,16 @@ find_solution(const std::function<int(arma::uvec)> &fitness_function,
       colony.mutate_colony();
       colony.find_fitnesses(fitness_function);
       colony.sort_fitnesses();
-      colony.make_next_generation(selection_rate);
 
       found_solution = (colony.current_top_fitness == 0);
 
-      std::cout << colony.current_top_fitness << std::endl;
+      std::cout << "ctf " << colony.current_top_fitness << std::endl;
 
       colony.cells[0].genes.t().print("top genes");
+
+      if (!found_solution) {
+        colony.make_next_generation(selection_rate);
+      }
 
       std::cout << "----" << std::endl;
 

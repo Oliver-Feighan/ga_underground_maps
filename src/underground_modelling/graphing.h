@@ -1,0 +1,4 @@
+#ifndef GAUS_GRAPHING_H
+#define GAUS_GRAPHING_H
+
+#endif //GAUS_GRAPHING_H
