@@ -16,8 +16,9 @@ struct Solution {
 
 };
 
+template<typename U, typename T>
 Solution
-find_solution(const std::function<int(arma::uvec)> & fitness_function,
+find_solution(const std::function<U(T)> & fitness_function,
               const int colony_size,
               const int gene_length,
               const double selection_rate,

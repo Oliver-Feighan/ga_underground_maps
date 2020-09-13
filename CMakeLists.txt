@@ -25,6 +25,7 @@ endif ()
 
 message("")
 
+
 set(CMAKE_CXX_STANDARD 17)
 
 add_library(LIBGAUS
@@ -32,9 +33,11 @@ add_library(LIBGAUS
         src/genetic_algorithm/genes.cpp
         src/genetic_algorithm/genetic_algorithm.cpp
 
+        src/underground_modelling/underground_modelling.cpp
         src/underground_modelling/graphing.cpp
 
-        )
+)
+
 
 target_link_libraries(LIBGAUS ${ARMADILLO_LIBRARIES})
 
@@ -42,7 +45,7 @@ add_executable(GAUS
 
         src/run/main.cpp
 
-        )
+)
 
 target_link_libraries(GAUS LIBGAUS)
 

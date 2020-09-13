@@ -26,10 +26,8 @@ BOOST_AUTO_TEST_CASE(test) {
   const auto solution =
       genetic_algorithm::find_solution(fitness_function, 20, 6, 0.8, 0.1);
 
-  BOOST_TEST(1 == 1);
+  const arma::uvec answer = {0, 1, 1, 0, 1, 1};
 
-  const arma::uvec answer = {1, 1, 0, 1, 1};
-
-//  BOOST_TEST(arma::approx_equal(solution.genes, answer, "absdiff", 1e-6));
+  BOOST_TEST(arma::approx_equal(solution.genes, answer, "absdiff", 0));
 
 }
