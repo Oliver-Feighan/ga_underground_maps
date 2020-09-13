@@ -33,6 +33,9 @@ add_library(LIBGAUS
             src/genetic_algorithm/genes.cpp
             src/genetic_algorithm/genetic_algorithm.cpp
 
+            src/underground_modelling/underground_modelling.cpp
+            src/underground_modelling/graphing.cpp
+
 )
 
 
@@ -41,9 +44,6 @@ target_link_libraries(LIBGAUS ${ARMADILLO_LIBRARIES})
 add_executable(GAUS
 
         src/run/main.cpp
-
-        src/underground_modelling/underground_modelling.cpp
-        src/underground_modelling/graphing.cpp
 
 )
 
@@ -59,10 +59,20 @@ enable_testing()
 
 set(BOOST_INCLUDE_DIRS)
 
-add_executable(test_executable src/run/binary_number_test.cpp)
+add_executable(binary_test src/run/binary_number_test.cpp)
 
-target_include_directories(test_executable PRIVATE ${BOOST_INCLUDE_DIRS})
+target_include_directories(binary_test PRIVATE ${BOOST_INCLUDE_DIRS})
 
-target_link_libraries(test_executable LIBGAUS)
+target_link_libraries(binary_test LIBGAUS)
 
-add_test(Binary_test test1 COMMAND test_executable)
+add_test(Binary_test test1 COMMAND binary_test)
+
+
+
+add_executable(graphing_test src/underground_modelling/graphing_test.cpp)
+
+target_include_directories(graphing_test PRIVATE ${BOOST_INCLUDE_DIRS})
+
+target_link_libraries(graphing_test LIBGAUS)
+
+add_test(Graphing_test test2 COMMAND graphing_test)

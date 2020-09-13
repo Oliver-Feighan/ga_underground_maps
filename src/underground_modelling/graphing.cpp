@@ -9,7 +9,7 @@ make_graph(const arma::umat &adj_mat){
 
   const auto connections = arma::find(adj_mat == 1);
 
-
+  connections.print("connections");
 
   return g;
 
