@@ -1,5 +1,7 @@
 #include "graphing.h"
 
+#include <armadillo>
+
 #include <boost/config.hpp>
 
 #include <boost/property_map/property_map.hpp>
@@ -9,15 +11,18 @@
 namespace gaus::underground_modelling {
 
 using namespace boost;
+typedef adjacency_list<vecS, vecS, undirectedS> Graph;
 
-void
-make_graph(){
+Graph
+make_graph(const arma::umat &adj_mat){
 
-  typedef adjacency_list<vecS, vecS, undirectedS> Graph;
+  Graph g;
 
-  Graph gruh;
+  const auto connections = arma::find(adj_mat == 1);
 
-  add_edge(0, 1, gruh);
+
+
+
 
 }
 

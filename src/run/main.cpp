@@ -11,24 +11,6 @@ run_gaus() {
 
   const auto start_time = std::chrono::steady_clock::now();
 
-  const int target = 27;
-
-  const std::function<double(arma::uvec)> fitness_function =
-      [&target](const arma::uvec & genes) {
-
-        const auto powers_of_two = arma::uvec{32, 16, 8, 4, 2, 1};
-
-        const int strength = arma::accu(powers_of_two % genes);
-
-        std::cout << "strength " << strength << std::endl;
-        genes.t().print("genes");
-
-        return std::abs(strength - target);
-      };
-
-  const auto solution =
-      genetic_algorithm::find_solution(fitness_function, 20, 6, 0.8, 0.1);
-
   const auto end_time = std::chrono::steady_clock::now();
 
   const auto time_taken = end_time - start_time;
