@@ -7,10 +7,10 @@
 
 namespace gaus {
 
-struct InputParam {
+struct GAParams {
 
   int colony_size = 20;
-  int gene_length = 6;
+  arma::SizeMat gene_size{6, 1};
   double selection_rate = 0.7;
   double mutation_rate = 0.2;
 
@@ -19,9 +19,11 @@ struct InputParam {
 void
 run_gaus() {
 
-  const InputParam input_param;
+  const GAParams input_param;
 
-  const auto model = underground_modelling::Model();
+  const underground_modelling::UndergroundModelParams UMParams;
+
+  const auto model = underground_modelling::Model(UMParams.station_coords, {});
 
   const auto start_time = std::chrono::steady_clock::now();
 
@@ -30,7 +32,7 @@ run_gaus() {
   const auto solution =
       genetic_algorithm::find_solution(model.fitness_function,
                                        input_param.colony_size,
-                                       input_param.gene_length,
+                                       input_param.gene_size,
                                        input_param.selection_rate,
                                        input_param.mutation_rate
   );

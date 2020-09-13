@@ -9,12 +9,32 @@
 
 namespace gaus::underground_modelling {
 
+struct StationCoordinates{
+
+  arma::vec x;
+  arma::vec y;
+};
+
+struct UndergroundModelParams {
+
+  StationCoordinates station_coords;
+
+};
+
 class Model{
 
   public:
 
+  StationCoordinates station_coords;
+
+  Model(const StationCoordinates &s_coords, const double foo){
+
+    station_coords = s_coords;
+
+  }
+
   std::function<double(arma::umat)> fitness_function =
-      [](const arma::umat &adjacency){
+      [station_coords = station_coords](const arma::umat &adjacency){
 
     const Graph graph = make_graph(adjacency);
 
@@ -24,7 +44,7 @@ class Model{
 
     const double terminal_stations = 0.0;
 
-    return 5.0;
+    return connectivity * cost * terminal_stations;
   };
 
 };
