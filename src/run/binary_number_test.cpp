@@ -24,7 +24,7 @@ BOOST_AUTO_TEST_CASE(test) {
       };
 
   const auto solution =
-      genetic_algorithm::find_solution(fitness_function, 20, 6, 0.8, 0.1);
+      genetic_algorithm::find_solution(fitness_function, 20, arma::SizeMat{6, 1}, 0.8, 0.1);
 
   const arma::uvec answer = {0, 1, 1, 0, 1, 1};
 

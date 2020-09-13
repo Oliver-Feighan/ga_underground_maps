@@ -2,11 +2,11 @@
 
 namespace gaus::genetic_algorithm {
 
-arma::uvec
-Cell::make_genes(const int gene_length) {
+arma::umat
+Cell::make_genes(const arma::SizeMat gene_size) {
 
   return
-      arma::randi<arma::uvec>(gene_length, arma::distr_param(0, 1));
+      arma::randi<arma::umat>(gene_size, arma::distr_param(0, 1));
 
 }
 
@@ -26,12 +26,12 @@ Cell::mutate(const double mutation_rate) {
 
 std::vector<Cell>
 Colony::make_colony(const int n_cells,
-                    const int gene_length) {
+                    const arma::SizeMat gene_size) {
 
   std::vector<Cell> initial_cells;
 
   for (int i = 0; i < n_cells; i++) {
-    initial_cells.push_back(Cell(i, gene_length, NAN));
+    initial_cells.push_back(Cell(i, gene_size, NAN));
 
   }
 
@@ -40,7 +40,7 @@ Colony::make_colony(const int n_cells,
 
 void
 Colony::find_fitnesses(
-    const std::function<int(arma::uvec)> & fitness_function) {
+    const std::function<double(arma::umat)> & fitness_function) {
   for (auto & cell : cells) {
     cell.fitness = fitness_function(cell.genes);
 
@@ -75,14 +75,14 @@ Colony::make_next_generation(const double selection){
 
   const std::vector<Cell> survivors(start, end);
 
-  std::vector<arma::uvec> genetic_material = {};
+  std::vector<arma::umat> genetic_material = {};
 
   for(int i = 0; i < n_survivors; i++){
 
     const int gene_length = survivors[i].genes.n_elem;
 
-    const auto top_half = survivors[i].genes.head(gene_length / 2);
-    const auto bottom_half = survivors[i].genes.tail(gene_length / 2);
+    const auto top_half = survivors[i].genes.head_rows(gene_length / 2);
+    const auto bottom_half = survivors[i].genes.tail_rows(gene_length / 2);
 
     genetic_material.push_back(top_half);
     genetic_material.push_back(bottom_half);
@@ -100,7 +100,7 @@ Colony::make_next_generation(const double selection){
     const auto gen_a = genetic_material[a];
     const auto gen_b = genetic_material[b];
 
-    const arma::uvec new_genes =
+    const arma::umat new_genes =
         arma::join_vert(genetic_material[a], genetic_material[b]);
 
     cells[i].genes = new_genes;

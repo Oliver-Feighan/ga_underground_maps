@@ -9,17 +9,17 @@ namespace gaus {
 
 struct InputParam {
 
-  int colony_size;
-  int gene_length;
-  double selection_rate;
-  double mutation_rate;
+  int colony_size = 20;
+  int gene_length = 6;
+  double selection_rate = 0.7;
+  double mutation_rate = 0.2;
 
 };
 
 void
 run_gaus() {
 
-  const InputParam input_param = {};
+  const InputParam input_param;
 
   const auto model = underground_modelling::Model();
 
@@ -28,12 +28,13 @@ run_gaus() {
   const auto end_time = std::chrono::steady_clock::now();
 
   const auto solution =
-      genetic_algorithm::find_solution<double(model.)>(model.fitness_function,
+      genetic_algorithm::find_solution(model.fitness_function,
                                        input_param.colony_size,
                                        input_param.gene_length,
                                        input_param.selection_rate,
                                        input_param.mutation_rate
-      );
+  );
+
 
   const auto time_taken = end_time - start_time;
 

@@ -8,15 +8,15 @@
 
 namespace gaus::genetic_algorithm {
 
-template<typename U, typename T>
-Solution
-find_solution(const std::function<T(U)> &fitness_function,
-              const int colony_size,
-              const int gene_length,
-              const double selection_rate,
-              const double mutation_rate){
 
-    auto colony = Colony(colony_size, gene_length, mutation_rate);
+Solution
+find_solution(const std::function<double(arma::umat)> &fitness_function,
+                   const int colony_size,
+                   const arma::SizeMat gene_size,
+                   const double selection_rate,
+                   const double mutation_rate){
+
+    auto colony = Colony(colony_size, gene_size, mutation_rate);
 
     bool found_solution = false;
 
