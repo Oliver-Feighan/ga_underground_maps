@@ -17,6 +17,8 @@ typedef adjacency_list<vecS, vecS, undirectedS> Graph;
 Graph
 make_graph(const arma::umat &adj_mat);
 
+double
+check_connectivity(const Graph &graph);
 
 }
 

@@ -34,11 +34,14 @@ class Model{
   }
 
   std::function<double(arma::umat)> fitness_function =
-      [station_coords = station_coords](const arma::umat &adjacency){
+      [station_coords = station_coords](const arma::umat &genes){
+
+    arma::umat adjacency = arma::symmatu(genes);
+    adjacency.diag().zeros();
 
     const Graph graph = make_graph(adjacency);
 
-    const double connectivity = 0.0;
+    const double connectivity = check_connectivity(graph);
 
     const double cost = 0.0;
 
