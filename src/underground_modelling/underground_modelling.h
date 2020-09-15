@@ -9,32 +9,25 @@
 
 namespace gaus::underground_modelling {
 
-struct StationCoordinates{
-
-  arma::vec x;
-  arma::vec y;
-};
-
-struct UndergroundModelParams {
-
-  StationCoordinates station_coords;
-
-};
-
 class Model{
 
   public:
 
   StationCoordinates station_coords;
-
-  Model(const StationCoordinates &s_coords, const double foo){
+  CostParameters cost_params;
+  
+  Model(const StationCoordinates &s_coords, 
+        const CostParameters &c_params){
 
     station_coords = s_coords;
+    cost_params = c_params;
+    
 
   }
 
   std::function<double(arma::umat)> fitness_function =
-      [station_coords = station_coords](const arma::umat &genes){
+      [station_coords = station_coords, cost_params = cost_params]
+      (const arma::umat &genes){
 
     arma::umat adjacency = arma::symmatu(genes);
     adjacency.diag().zeros();
@@ -43,9 +36,9 @@ class Model{
 
     const double connectivity = check_connectivity(graph);
 
-    const double cost = 0.0;
+    const double cost = calculate_cost(adjacency, station_coords, cost_params);
 
-    const double terminal_stations = 0.0;
+    const double terminal_stations = find_terminal_stations(adjacency);
 
     return connectivity * cost * terminal_stations;
   };

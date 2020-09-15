@@ -28,7 +28,7 @@ find_solution(const std::function<double(arma::umat)> &fitness_function,
       colony.find_fitnesses(fitness_function);
       colony.sort_fitnesses();
 
-      found_solution = (colony.current_top_fitness == 0);
+      found_solution = (colony.current_top_fitness == 0 || n_generations > 5);
 
       std::cout << "ctf " << colony.current_top_fitness << std::endl;
 
