@@ -79,7 +79,7 @@ Colony::make_next_generation(const double selection){
 
   for(int i = 0; i < n_survivors; i++){
 
-    const int gene_length = survivors[i].genes.n_elem;
+    const int gene_length = survivors[i].genes.n_rows;
 
     const auto top_half = survivors[i].genes.head_rows(gene_length / 2);
     const auto bottom_half = survivors[i].genes.tail_rows(gene_length / 2);

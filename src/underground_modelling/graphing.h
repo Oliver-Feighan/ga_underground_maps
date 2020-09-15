@@ -14,8 +14,6 @@ namespace gaus::underground_modelling {
 using namespace boost;
 typedef adjacency_list<vecS, vecS, undirectedS> Graph;
 
-Graph
-make_graph(const arma::umat & adj_mat);
 
 struct StationCoordinates{
 
@@ -33,13 +31,10 @@ struct CostParameters {
 struct UndergroundModelParams {
 
   StationCoordinates station_coords;
-
   CostParameters cost_params;
 
 };
 
-double
-check_connectivity(const Graph & graph);
 
 double
 calculate_cost(const arma::umat &adjacency,
@@ -48,6 +43,9 @@ calculate_cost(const arma::umat &adjacency,
 
 double
 find_terminal_stations(const arma::umat & adj_mat);
+
+double
+check_connectivity(const arma::umat & adjacency);
 
 }
 

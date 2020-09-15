@@ -12,7 +12,7 @@ namespace gaus::genetic_algorithm {
 class Cell {
 private:
   arma::umat
-  make_genes(const arma::SizeMat gene_size);
+  make_genes(arma::SizeMat gene_size);
 
 public:
   int tag; //an identifer for the cell
@@ -20,9 +20,9 @@ public:
   int fitness; //to be populated by the fitness function
 
   void
-  mutate(const double mutation_rate);
+  mutate(double mutation_rate);
 
-  Cell(const int t, const arma::SizeMat gene_size, const int f) {
+  Cell(int t, arma::SizeMat gene_size, int f) {
     tag = t;
     genes = make_genes(gene_size);
     fitness = f;
@@ -34,7 +34,7 @@ class Colony {
 private:
 
   std::vector<Cell>
-  make_colony(const int n_cells, const arma::SizeMat gene_size);
+  make_colony(int n_cells, arma::SizeMat gene_size);
 
 public:
   std::vector<Cell> cells;
@@ -42,7 +42,7 @@ public:
   double mutation_rate;
   int current_top_fitness = NAN;
 
-  Colony(const int size, const arma::SizeMat gene_size, const double m_rate) {
+  Colony(int size, arma::SizeMat gene_size, double m_rate) {
     cells = make_colony(size, gene_size);
     colony_size = size;
     assert(m_rate < 1);
@@ -59,7 +59,7 @@ public:
   mutate_colony();
 
   void
-  make_next_generation(const double selection);
+  make_next_generation(double selection);
 
 };
 
