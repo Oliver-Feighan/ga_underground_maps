@@ -18,10 +18,10 @@ struct Solution {
 
 Solution
 find_solution(const std::function<double(arma::umat)> & fitness_function,
-              const int colony_size,
-              const arma::SizeMat gene_length,
-              const double selection_rate,
-              const double mutation_rate);
+               int colony_size,
+               arma::SizeMat gene_length,
+               double selection_rate,
+               double mutation_rate);
 
 }
 
