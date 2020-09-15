@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE( terminal_stations ){
 
   std::cout << "f_terminal " << f_terminal << std::endl;
 
-  BOOST_TEST(f_terminal == 0.5);
+  BOOST_TEST(f_terminal == 2);
 }
 
 
@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE( connectivity ){
 
   std::cout << "connectivity " << connectivity << std::endl;
 
-  BOOST_TEST(connectivity == 0.5);
+  BOOST_TEST(connectivity == 2);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -11,7 +11,7 @@ namespace gaus::genetic_algorithm {
 
 struct Solution {
 
-  arma::uvec genes;
+  arma::umat genes;
   int n_generations;
 
 };

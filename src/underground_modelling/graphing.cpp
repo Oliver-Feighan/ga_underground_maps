@@ -38,7 +38,7 @@ check_connectivity(const arma::umat &adjacency){
 
   std::vector<int> component(num_vertices(graph));
 
-  return 1. / connected_components(graph, &component[0]);
+  return connected_components(graph, &component[0]);
 
 }
 
@@ -69,7 +69,9 @@ find_distances(const StationCoordinates &station_coord){
   const auto x = outer_difference(station_coord.x);
   const auto y = outer_difference(station_coord.y);
 
-  return arma::sqrt(arma::square(x) + arma::square(y));
+  const auto distances = arma::sqrt(arma::square(x) + arma::square(y));
+
+  return distances;
 
 }
 
@@ -79,11 +81,13 @@ calculate_cost(const arma::umat &adjacency,
                const StationCoordinates &station_coord,
                const CostParameters &cp){
 
-  const auto distances = find_distances(station_coord);
+  const auto all_distances = find_distances(station_coord);
+
+  const auto built_distances = all_distances % adjacency;
 
   //0.5 to stop double counting
-  return 0.5 * (arma::accu(distances % adjacency * cp.cost_per_unit)
-                + arma::accu(distances) * cp.base_cost);
+  return 0.5 * (arma::accu(built_distances * cp.cost_per_unit)
+                + arma::accu(adjacency) * cp.base_cost);
 }
 
 
@@ -92,7 +96,7 @@ find_terminal_stations(const arma::umat &adjacency){
 
   const auto n_connections = arma::sum(adjacency, 1);
 
-  return 1. / arma::find(n_connections < 1).eval().n_elem;
+  return 1. + arma::find(n_connections <= 1).eval().n_elem;
 
 }
 

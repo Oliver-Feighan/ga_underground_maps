@@ -17,7 +17,7 @@ private:
 public:
   int tag; //an identifer for the cell
   arma::umat genes; //parameters that define behaviour
-  int fitness; //to be populated by the fitness function
+  double fitness; //to be populated by the fitness function
 
   void
   mutate(double mutation_rate);
@@ -40,7 +40,7 @@ public:
   std::vector<Cell> cells;
   int colony_size;
   double mutation_rate;
-  int current_top_fitness = NAN;
+  double current_top_fitness = NAN;
 
   Colony(int size, arma::SizeMat gene_size, double m_rate) {
     cells = make_colony(size, gene_size);

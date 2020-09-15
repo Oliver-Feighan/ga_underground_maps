@@ -22,7 +22,9 @@ run_gaus() {
   const GAParams input_param;
 
   const underground_modelling::UndergroundModelParams UMParams =
-      {{{0, 0, 1, 1}, {0, 1, 0, 1}}, {0.5, 0.2}};
+      {{{0, 0, 1, 1},
+        {0, 1, 1, 0}},
+       {0.5, 0.2}};
 
   const auto model =
       underground_modelling::Model(UMParams.station_coords, UMParams.cost_params);

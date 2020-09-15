@@ -29,6 +29,7 @@ class Model{
       (const arma::umat &genes){
 
       arma::umat adjacency = arma::symmatu(genes);
+
       adjacency.diag().zeros();
 
       const double connectivity = check_connectivity(adjacency);
