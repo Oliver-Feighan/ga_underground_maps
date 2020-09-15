@@ -10,9 +10,9 @@ namespace gaus {
 struct GAParams {
 
   int colony_size = 20;
-  arma::SizeMat gene_size{4, 4};
-  double selection_rate = 0.7;
-  double mutation_rate = 0.2;
+  arma::SizeMat gene_size{60, 60};
+  double selection_rate = 0.9;
+  double mutation_rate = 0.02;
 
 };
 
@@ -22,8 +22,8 @@ run_gaus() {
   const GAParams input_param;
 
   const underground_modelling::UndergroundModelParams UMParams =
-      {{{0, 0, 1, 1},
-        {0, 1, 1, 0}},
+      {{arma::randu(60) * 100,
+        arma::randu(60) * 100},
        {0.5, 0.2}};
 
   const auto model =
@@ -44,9 +44,26 @@ run_gaus() {
 
   const auto time_taken = end_time - start_time;
 
-  solution.genes.t().print("solution");
+  const auto symmetrized_solution = arma::symmatu(solution.genes);
+
+  //symmetrized_solution.print("solution");
   std::cout << "found solution in " << solution.n_generations << " generations";
-  std::cout << " and " << std::chrono::duration_cast<std::chrono::microseconds>(time_taken).count() << " microseconds";
+
+  if (std::chrono::duration_cast<std::chrono::nanoseconds>(time_taken).count() < 1000){
+    std::cout << " and " << std::chrono::duration_cast<std::chrono::nanoseconds>(time_taken).count() << " nanoseconds";
+
+  } else if (std::chrono::duration_cast<std::chrono::microseconds>(time_taken).count() < 1000){
+    std::cout << " and " << std::chrono::duration_cast<std::chrono::microseconds>(time_taken).count() << " microseconds";
+
+  } else if (std::chrono::duration_cast<std::chrono::milliseconds>(time_taken).count() < 1000){
+    std::cout << " and " << std::chrono::duration_cast<std::chrono::milliseconds>(time_taken).count() << " milliseconds";
+
+  } else if (std::chrono::duration_cast<std::chrono::seconds>(time_taken).count() < 1000){
+    std::cout << " and " << std::chrono::duration_cast<std::chrono::seconds>(time_taken).count() << " seconds";
+
+  }
+
+
 }
 
 }
